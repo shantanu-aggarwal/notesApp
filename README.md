@@ -11,7 +11,7 @@ Step 4: run following command "fastapi dev main.py"
 
 Step 5: Open http://localhost:8000/docs to test the apis
 
-Note: Admin user is automatical created at the first run of app. User:admin, pass: admin
+Note: Admin user is automatically created at the first run of app. User:admin, pass: admin
 
 API Explation: 
 
