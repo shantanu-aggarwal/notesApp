@@ -26,7 +26,7 @@ router = APIRouter(
 async def get( user_id:int ):
     users, status = userService.getAll( user_id )
     if status == Status.ERROR:
-        return { "error" : "Error occured while checking note access"}
+        return { "error" : "Error occured while checking access"}
     elif status == Status.USER_UNDEFINED:
         return { "error" : "User not found" }
     elif status == Status.INVALID_OPERATION:
@@ -41,7 +41,7 @@ async def get( user_id:int ):
 async def create( user : User ):
     response, status = userService.createUser(user )
     if status == Status.ERROR:
-        return { "error" : "Error occured while checking note access"}
+        return { "error" : "Error occured while creating new user"}
     elif status == Status.SUCCESS:
         return response
     elif status == Status.INVALID_OPERATION:
@@ -53,7 +53,7 @@ async def create( user : User ):
 async def login( userLogin : UserLogin ):
     user, status = userService.validateUser( userLogin.username, userLogin.password )
     if status == Status.ERROR:
-        return { "error" : "Error occured while checking note access"}
+        return { "error" : "Error occured while checking user"}
     elif status == Status.INVALID_OPERATION:
         return { "error" : "Password is incorrect."}
     elif status == Status.SUCCESS:

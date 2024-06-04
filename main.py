@@ -11,7 +11,7 @@ sys.path.append(parent_dir)
 
 
 from fastapi import FastAPI
-from notesApp.routers import user_routes, note
+from notesApp.routers import user_routes, note_routes
 from notesApp.init import init
 
 init()
@@ -20,7 +20,7 @@ init()
 app = FastAPI() ## add dependencies to check for token
 
 app.include_router(user_routes.router)
-# app.include_router(note.router)
+app.include_router(note_routes.router)
 
 @app.get('/')
 async def app_root():

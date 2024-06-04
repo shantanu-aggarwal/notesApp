@@ -8,7 +8,12 @@ Created on Sat Jun  1 16:43:28 2024
 
 from pydantic import BaseModel
 
-class Note:
-    id    : str
-    title : str 
-    body  : str
+class Note(BaseModel):
+    id       : int
+    title    : str 
+    content  : str
+    tags     : list
+    
+class SaveNote(BaseModel):  
+    title    : str 
+    content  : str

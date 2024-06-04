@@ -71,13 +71,13 @@ def createUser( user:User ):
     db = SessionLocal()
     response = None
     try:
-        check = crud.get_user_by_email_or_username( user, db )
+        check = crud.get_user_by_email_or_username( user.username, db )
         if check:
             response = { "error" : "Email or Username already exists." }, Status.INVALID_OPERATION
-        
-        user = crud.create_user( user, db )
-        response = { "user_id": user.id }
-        status = Status.SUCCESS
+        else:
+            user = crud.create_user( user, db )
+            response = { "user_id": user.id }
+            status = Status.SUCCESS
     
     except Exception:
         logging.error( traceback.format_exc() )

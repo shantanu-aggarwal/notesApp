@@ -5,6 +5,7 @@ Created on Sun Jun  2 14:59:39 2024
 
 @author: shantanuaggarwal
 """
+import os
 import logging
 import traceback
 
@@ -15,6 +16,8 @@ from notesApp.database.init import engine, SessionLocal
 
 def init():
     
+    OPENAI_API_KEY = "<open_api_key>"
+    os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
     db_models.Base.metadata.create_all(bind=engine)
     db = SessionLocal()
     try:
@@ -25,7 +28,7 @@ def init():
                               password  = "admin" ,
                               role      = appConstants.Roles.ADMIN.value
                               )
-            crud.create_user( _user, db )
+            crud.create_user( _user, db, role = appConstants.Roles.ADMIN.value )
     except:
         logging.error( traceback.format_exc() )
         logging.error( "Admin user not created" )
