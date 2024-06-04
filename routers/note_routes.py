@@ -135,11 +135,12 @@ async def getSummaryByTag( user_id:int, tag:str ):
     else:
         return { "error" : "Internal Server Error. Unhandled error occured."}
     
-@router.get("/completion")
-async def noteCompletion( title:str, content:str ):
+@router.post("/completion")
+async def noteCompletion( note:SaveNote ):
     completion = None
     try:
-        completion, status = llmService.getCompletion( title, content)
+        completion, status = llmService.getCompletion( note.title, note.content)
+        print(completion)
         if status == Status.SUCCESS:
             return { "note" : completion }
         else:

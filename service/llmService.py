@@ -8,8 +8,8 @@ Created on Tue Jun  4 15:26:31 2024
 import logging
 import traceback
 
-from langchain.tools import Tool, DuckDuckGoSearchRun, ArxivQueryRun, WikipediaQueryRun
-from langchain.utilities import WikipediaAPIWrapper
+from langchain_community.tools import Tool, DuckDuckGoSearchRun, ArxivQueryRun, WikipediaQueryRun
+from langchain_community.utilities import WikipediaAPIWrapper
 from langchain.agents import initialize_agent, AgentType
 
 from langchain_openai import ChatOpenAI
@@ -210,14 +210,16 @@ def getCompletion( title:str, content:str ):
     status = Status.ERROR
     
     llm = ChatOpenAI(temperature=0)
-    agent = initialize_agent(get_llm_tools( llm ) , llm, agent=AgentType.OPENAI_FUNCTIONS, verbose=False)
+    agent = initialize_agent(get_llm_tools( llm ) , llm, agent=AgentType.OPENAI_FUNCTIONS, verbose=False, return_intermediate_steps=True)
     
     prompt = "Write an essay in 1000 words for the topic {input}, use the tools to retrieve the necessary information"  
     
     input = f"Title: {title} \n\n  content: {content}"
       
     try: 
-        note = agent.invoke(prompt.format(input=input), return_only_outputs=True)['output']
+        note = agent.invoke(prompt.format(input=input) )['intermediate_steps'][0][1]
+        print(note)
+        
         status = Status.SUCCESS
     except:
         logging.error( traceback.format_exc() )
@@ -225,7 +227,7 @@ def getCompletion( title:str, content:str ):
     return note, status
     
 def get_llm_tools( llm ):
-    prompt_template = "Complete the note for the title provided ( use the content as startingg of the note )by the user with the help of following content: {content}"  
+    prompt_template = "Complete the essay for the title provided ( use the content as startingg of the note )by the user with the help of following content: {content}"  
     essay = LLMChain(  
         llm=llm,  
         prompt=PromptTemplate.from_template(prompt_template)  
