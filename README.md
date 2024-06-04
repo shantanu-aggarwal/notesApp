@@ -11,7 +11,7 @@ Step 4: run following command "fastapi dev main.py"
 
 Step 5: Open http://localhost:8000/docs to test the apis
 
-Note: Admin user is automatically created at the first run of app. User:admin, pass: admin
+Note: Admin user is automatically created at the first run of app. User:admin, pwd: admin
 
 API Explation: 
 
@@ -43,5 +43,5 @@ API Explation:
 /notes/completion?title={title}&content={content} : Provide note suggestion for a given title and content( if any )
 
 
-database used is sqlite
+NOTE : database used is sqlite
 
